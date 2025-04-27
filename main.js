@@ -66,24 +66,60 @@ if (videoElement) {
 }
 
 // Ripple effect for all buttons, links, and full page (by Cascade)
+// 升級：根據音量峰值分析震動節奏
 function playRippleSoundAndVibrate() {
   const audio = document.getElementById('ripple-audio');
   if (audio) {
     audio.volume = 1;
     audio.currentTime = 0;
     audio.play();
-  }
-  // 手機震動 100 毫秒
-  if (window.navigator && window.navigator.vibrate) {
-    // 模擬引擎震動：短震(80ms)+停(70ms)交替，持續約5秒
-    // 80+70=150ms, 5000/150≈33次
-    const pattern = [];
-    for (let i = 0; i < 33; i++) {
-      pattern.push(80, 70);
+    // 使用 Web Audio API 分析音量峰值，動態產生震動 pattern
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      fetch(audio.src)
+        .then(res => res.arrayBuffer())
+        .then(buf => ctx.decodeAudioData(buf))
+        .then(decoded => {
+          const channel = decoded.numberOfChannels > 1 ? decoded.getChannelData(0) : decoded.getChannelData(0);
+          const duration = decoded.duration;
+          const interval = 50; // 每 50ms 分析一次
+          const sampleRate = decoded.sampleRate;
+          const samplesPerInterval = Math.floor(sampleRate * interval / 1000);
+          const pattern = [];
+          let lastWasVibrate = false;
+          for (let i = 0; i < channel.length; i += samplesPerInterval) {
+            let max = 0;
+            for (let j = i; j < i + samplesPerInterval && j < channel.length; j++) {
+              max = Math.max(max, Math.abs(channel[j]));
+            }
+            // 門檻值（可微調，越小越敏感）
+            if (max > 0.13) {
+              pattern.push(interval); // 震動 interval ms
+              lastWasVibrate = true;
+            } else {
+              if (lastWasVibrate) {
+                pattern.push(interval); // 停止 interval ms
+                lastWasVibrate = false;
+              } else {
+                // 連續靜音可合併
+                if (pattern.length > 0) pattern[pattern.length - 1] += interval;
+                else pattern.push(interval);
+              }
+            }
+          }
+          if (window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(pattern);
+          }
+        });
+    } catch (e) {
+      // 若失敗則 fallback 用舊的 pattern
+      if (window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate([80, 70, 80, 70, 80, 70, 80, 70, 80, 70]);
+      }
     }
-    window.navigator.vibrate(pattern);
   }
 }
+
 
 window.addEventListener('DOMContentLoaded', function() {
   // 按鈕與連結原本的 ripple
