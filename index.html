@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamaker 汽車美容展示</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">首頁</a>
+            <a href="gallery.html">作品集</a>
+        </nav>
+    </header>
+    <section class="hero-banner">
+        <div class="hero-overlay"></div>
+        <video id="carouselVideo" class="hero-video" autoplay muted playsinline></video>
+        <div class="hero-content">
+            <h1>Dreamaker 汽車美容</h1>
+            <p>專業汽車美容服務，讓您的愛車煥然一新</p>
+        </div>
+    </section>
+    <section class="booking-section">
+        <h2>線上預約服務</h2>
+        <form class="booking-form" id="bookingForm">
+            <label for="name">姓名</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phone">電話</label>
+            <div style="position:relative;display:flex;align-items:center;">
+  <input type="password" id="phone" name="phone" required pattern="[0-9]{10,12}" style="padding-right:36px;width:100%;">
+  <button type="button" id="togglePhone" style="position:absolute;right:6px;background:none;border:none;cursor:pointer;outline:none;">
+    <span id="eyeIcon" style="font-size:1.2em;">👁️</span>
+  </button>
+</div>
+
+            <label for="date">預約日期：</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">預約時段：</label>
+            <select id="time" name="time" required>
+              <option value="早8:00~12:00">早8:00~12:00</option>
+              <option value="中13:00~17:00">中13:00~17:00</option>
+              <option value="晚18:00~22:00">晚18:00~22:00</option>
+            </select>
+
+            <label for="service">服務項目</label>
+            <select id="service" name="service" required>
+                <option value="">請選擇</option>
+                <option value="A方案 SOP日常尊榮養護">A方案 SOP日常尊榮養護</option>
+                <option value="B方案 刮痕美容(服務說明將有專人與您聯絡)">B方案 刮痕美容(服務說明將有專人與您聯絡)</option>
+                <option value="C方案 全車玻璃除油墨+全車玻璃鍍膜 (建議三個月為一個週期)">C方案 全車玻璃除油墨+全車玻璃鍍膜 (建議三個月為一個週期)</option>
+                <option value="D方案 以上綜合 大全餐">D方案 以上綜合 大全餐</option>
+                <option value="E方案 緊急處理方案 草莓奶茶掐倒在車內">E方案 緊急處理方案 草莓奶茶掐倒在車內</option>
+            </select>
+
+            <label for="note">備註 (有特殊需求請留言)</label>
+            <textarea id="note" name="note" rows="2"></textarea>
+
+            <button type="submit">送出預約</button>
+        </form>
+        <div id="bookingMsg" class="booking-msg"></div>
+    </section>
+    <footer>
+        <div class="footer-animated-text">感謝您！</div>
+        <p style="margin-top:28px;font-size:0.95em;color:#888;">此網站由 Dreamaker 汽車美容製作</p>
+        <p>&copy; 2025 Dreamaker 汽車美容 | <a href="#" id="privacy-link">隱私權政策</a> | <a href="#" id="disclaimer-link">法律免責聲明</a></p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <audio id="ripple-audio" src="lambo-start-up-sound-26364.mp3" preload="auto"></audio>
+    <!-- 隱私權政策對話框 -->
+    <dialog id="privacy-dialog" style="max-width:480px;padding:2em 1.5em;line-height:1.7;">
+      <h3 style="margin-top:0;">隱私權政策</h3>
+      <p>本網站僅用於汽車美容服務資訊展示與預約，不會蒐集您的個人資料，也不會將您的資訊提供給第三方。若您透過表單留下聯絡方式，僅用於與您聯繫服務事項。</p>
+      <p>如對隱私有疑慮，歡迎隨時聯絡我們。</p>
+      <button onclick="document.getElementById('privacy-dialog').close()" style="margin-top:1em;">關閉</button>
+    </dialog>
+    <!-- 法律免責聲明對話框 -->
+    <dialog id="disclaimer-dialog" style="max-width:480px;padding:2em 1.5em;line-height:1.7;">
+      <h3 style="margin-top:0;">法律免責聲明與著作權聲明</h3>
+      <p>本網站所有圖片及內容，除特別標註外，均為 Dreamaker 汽車美容所有。未經授權，請勿轉載、使用或作任何商業用途。如需合作或授權，請聯絡我們。</p>
+      <p>本網站僅供展示汽車美容服務及作品之用，對於任何因使用本網站資料或服務所產生之損失或法律責任，Dreamaker 汽車美容概不負責。</p>
+      <p>本網站所載資訊僅供參考，對於內容之正確性、完整性及即時性不作任何保證。網站可能包含第三方連結，對外部網站內容亦不負責。Dreamaker 汽車美容保留隨時修改網站內容及服務之權利，恕不另行通知。</p>
+      <button onclick="document.getElementById('disclaimer-dialog').close()" style="margin-top:1em;">關閉</button>
+    </dialog>
+    <script>
+      document.getElementById('privacy-link').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('privacy-dialog').showModal();
+      };
+      document.getElementById('disclaimer-link').onclick = function(e) {
+        e.preventDefault();
+        document.getElementById('disclaimer-dialog').showModal();
+      };
+
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
