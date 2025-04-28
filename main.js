@@ -99,14 +99,23 @@ window.addEventListener('DOMContentLoaded', function() {
   var testBtn = document.createElement('button');
   testBtn.textContent = '測試手機震動';
   testBtn.style.position = 'fixed';
-  testBtn.style.bottom = '22px';
-  testBtn.style.right = '22px';
+  testBtn.style.top = '18px';
+  testBtn.style.left = '50%';
+  testBtn.style.transform = 'translateX(-50%)';
   testBtn.style.zIndex = 99999;
-  testBtn.style.background = '#222';
-  testBtn.style.color = '#fff';
-  testBtn.style.padding = '12px 22px';
-  testBtn.style.borderRadius = '8px';
-  testBtn.style.fontSize = '1.1em';
+  testBtn.style.background = '#ff9800';
+  testBtn.style.color = '#191e2a';
+  testBtn.style.padding = '18px 38px';
+  testBtn.style.borderRadius = '16px';
+  testBtn.style.fontSize = '1.55em';
+  testBtn.style.fontWeight = 'bold';
+  testBtn.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18)';
+  testBtn.style.letterSpacing = '2px';
+  testBtn.style.border = '2px solid #fff';
+  testBtn.style.opacity = '0.96';
+  testBtn.style.cursor = 'pointer';
+  testBtn.style.userSelect = 'none';
+  testBtn.style.touchAction = 'manipulation';
   testBtn.onclick = function() {
     if (navigator.vibrate) {
       console.log('【測試按鈕】vibrate 即將執行');
