@@ -167,10 +167,6 @@ function showBookingSection(e) {
   var bookingForm = document.getElementById('bookingForm');
   if (bookingForm) {
     bookingForm.addEventListener('submit', function(e) {
-      // 立即震動一次，提升 LINE 內建瀏覽器支援率
-      if (navigator.vibrate) {
-        navigator.vibrate([200]);
-      }
       e.preventDefault(); // 先阻止預設送出
       var blackout = document.getElementById('blackout-mask');
       if (blackout) {
