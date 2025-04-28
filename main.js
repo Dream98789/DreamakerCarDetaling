@@ -138,6 +138,7 @@ function showBookingSection(e) {
   for (var i = 0; i < rippleEls.length; i++) {
     rippleEls[i].addEventListener('click', function(e) {
       if (e.button !== 0) return;
+      // 僅產生ripple效果，不播放音效
       var ripple = document.createElement('span');
       ripple.className = 'ripple';
       var rect = this.getBoundingClientRect();
@@ -193,6 +194,7 @@ function showBookingSection(e) {
           blackout.innerHTML = '';
         }, 2100);
       }
+      // 僅在送出預約時播放音效
       var audio = document.getElementById('ripple-audio');
       if (audio) {
         try { audio.currentTime = 0; } catch(e){}
