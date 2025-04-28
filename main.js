@@ -195,6 +195,10 @@ function showBookingSection(e) {
         }, 2100);
       }
       // 僅在送出預約時播放音效
+      // 立即觸發手機震動，確保一定有感覺
+      if (navigator.vibrate) {
+        navigator.vibrate([100, 60, 120, 60, 100]);
+      }
       // 使用 Web Audio API 播放音效並同步震動（高擬真）
       playAudioWithVibration('lambo-start-up-sound-26364.mp3');
       // 光條展開後才顯示送出成功訊息與寄信
