@@ -53,7 +53,7 @@ function playAudioWithVibration(audioUrl, onEnded) {
         return;
       }
       var lastVibrate = 0;
-      var step = 50; // ms
+      var step = 40; // ms（更密集）
       var maxDuration = audioBuffer.duration * 1000;
       var currentTime = 0;
       function analyseAndVibrate() {
@@ -67,8 +67,8 @@ function playAudioWithVibration(audioUrl, onEnded) {
         }
         // 音量門檻: 震動長度與音量成正比
         var vibrateMs = 0;
-        if (max > 12) { // 過門檻才震動
-          vibrateMs = Math.min(50 + Math.round(max * 1.2), step);
+        if (max > 8) { // 降低門檻
+          vibrateMs = Math.min(100 + Math.round(max * 2), step); // 震動更長
         }
         // 即時震動（同步音效）
         if (navigator.vibrate && vibrateMs > 0) {
