@@ -9,6 +9,16 @@ function playAudioWithVibration(audioUrl, onEnded) {
   }
   var AudioContext = window.AudioContext || window.webkitAudioContext;
   var ctx = new AudioContext();
+  // 確保 AudioContext 已啟動（部分瀏覽器需手動 resume）
+  if (ctx.state === 'suspended') {
+    ctx.resume();
+  }
+  if (!window.AudioContext && !window.webkitAudioContext) {
+    alert('您的瀏覽器不支援高擬真音效震動同步功能');
+    return;
+  }
+  var AudioContext = window.AudioContext || window.webkitAudioContext;
+  var ctx = new AudioContext();
   var analyser = ctx.createAnalyser();
   analyser.fftSize = 2048;
   var source;
@@ -29,8 +39,19 @@ function playAudioWithVibration(audioUrl, onEnded) {
       source.connect(gainNode);
       gainNode.connect(analyser);
       analyser.connect(ctx.destination);
+      // 再次保證 context 已 resume
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
       isPlaying = true;
-      source.start();
+      try {
+        source.start();
+      } catch (e) {
+        alert('音效播放失敗，請確認音效檔案存在且瀏覽器支援。');
+        if (onEnded) onEnded();
+        ctx.close();
+        return;
+      }
       var lastVibrate = 0;
       var step = 50; // ms
       var maxDuration = audioBuffer.duration * 1000;
@@ -49,18 +70,15 @@ function playAudioWithVibration(audioUrl, onEnded) {
         if (max > 12) { // 過門檻才震動
           vibrateMs = Math.min(50 + Math.round(max * 1.2), step);
         }
-        vibratePattern.push(vibrateMs, step - vibrateMs);
+        // 即時震動（同步音效）
+        if (navigator.vibrate && vibrateMs > 0) {
+          navigator.vibrate(vibrateMs);
+        }
         currentTime += step;
         if (currentTime < maxDuration) {
           setTimeout(analyseAndVibrate, step);
         } else {
           isPlaying = false;
-          // 結束時執行 vibrate
-          if (navigator.vibrate) {
-            // 過濾掉 0ms 片段
-            var filtered = vibratePattern.filter(function(val, idx){ return idx % 2 === 0 ? val > 0 : true; });
-            navigator.vibrate(filtered);
-          }
           if (onEnded) onEnded();
           ctx.close();
         }
