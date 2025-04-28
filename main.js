@@ -95,37 +95,7 @@ function showDreamakerPopup() {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  // === 測試震動按鈕 ===
-  var testBtn = document.createElement('button');
-  testBtn.textContent = '測試手機震動';
-  testBtn.style.position = 'fixed';
-  testBtn.style.top = '18px';
-  testBtn.style.left = '50%';
-  testBtn.style.transform = 'translateX(-50%)';
-  testBtn.style.zIndex = 99999;
-  testBtn.style.background = '#ff9800';
-  testBtn.style.color = '#191e2a';
-  testBtn.style.padding = '18px 38px';
-  testBtn.style.borderRadius = '16px';
-  testBtn.style.fontSize = '1.55em';
-  testBtn.style.fontWeight = 'bold';
-  testBtn.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18)';
-  testBtn.style.letterSpacing = '2px';
-  testBtn.style.border = '2px solid #fff';
-  testBtn.style.opacity = '0.96';
-  testBtn.style.cursor = 'pointer';
-  testBtn.style.userSelect = 'none';
-  testBtn.style.touchAction = 'manipulation';
-  testBtn.onclick = function() {
-    if (navigator.vibrate) {
-      console.log('【測試按鈕】vibrate 即將執行');
-      const result = navigator.vibrate([200, 80, 200, 80, 200]);
-      console.log('【測試按鈕】vibrate 執行結果:', result);
-    } else {
-      console.log('【測試按鈕】此裝置不支援 vibrate');
-    }
-  };
-  document.body.appendChild(testBtn);
+
   // 新硬幣翻轉按鈕動畫
   var coinBtn = document.getElementById('coinFlipBtn');
   if (coinBtn) {
