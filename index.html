@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <link rel="stylesheet" href="coin-flip-btn.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dreamaker 汽車美容展示</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nuke-booking-btn.css">
 </head>
 <body>
+  <div id="blackout-mask"></div>
     <header>
         <nav>
             <a href="index.html">首頁</a>
@@ -21,7 +24,13 @@
             <p>專業汽車美容服務，讓您的愛車煥然一新</p>
         </div>
     </section>
-    <section class="booking-section">
+    <div class="coin-btn-container">
+      <button id="coinFlipBtn" class="coin-flip-btn">
+        <span class="face front">VVIP預約</span>
+        <span class="face back">Dreamaker</span>
+      </button>
+    </div>
+    <section class="booking-section" id="bookingSection" style="display:none;">
         <h2>線上預約服務</h2>
         <form class="booking-form" id="bookingForm">
             <label for="name">姓名</label>
@@ -96,5 +105,6 @@
 
     </script>
     <script src="main.js"></script>
+  <audio id="ripple-audio" src="lambo-start-up-sound-26364.mp3"></audio>
 </body>
 </html>

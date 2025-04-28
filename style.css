@@ -4,6 +4,168 @@ body {
     padding: 0;
     background: #191e2a;
     color: #f6f8fa;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+}
+
+#blackout-mask {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.96);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+
+#blackout-mask.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+#blackout-mask.head-lighting {
+  background: rgba(0,0,0,1.0) !important; /* 動畫時也保持全黑 */
+  transition: background 0.3s;
+}
+
+#blackout-mask.fadeout {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+#blackout.head-light {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0vw;
+  height: 16vw;
+  max-width: 1080px; max-height: 220px;
+  background:
+    linear-gradient(90deg, transparent 0%, #fff 20%, #fff 80%, transparent 100%);
+  box-shadow: 0 0 80px 20px #fff, 0 0 300px 60px #fff;
+  transform: translate(-50%,-50%);
+  opacity: 1;
+  pointer-events: none;
+  border-radius: 2vw;
+  filter: brightness(2.5) saturate(1.2);
+  transition: width 1.1s cubic-bezier(.4,0,.2,1), opacity 0.5s;
+  will-change: width,opacity;
+  overflow: visible;
+}
+#blackout-mask.light-animate .head-light {
+  width: 80vw;
+}
+#blackout-mask.light-fadeout .head-light {
+  opacity: 0;
+}
+.head-light-dot {
+  position: absolute;
+  top: 50%;
+  width: 4vw; height: 6vw;
+  max-width: 56px; max-height: 84px;
+  background: radial-gradient(ellipse at 50% 50%, #fff 0%, #fff 60%, rgba(255,255,255,0.7) 80%, transparent 100%);
+  border-radius: 38% / 50%;
+  transform: translate(-50%,-50%) scale(0.7);
+  pointer-events: none;
+  box-shadow: 0 0 32px 12px #fff, 0 0 80px 20px #fff;
+  opacity: 1;
+  transition: left 1.1s cubic-bezier(.4,0,.2,1), opacity 0.5s;
+}
+.head-light-dot.left {
+  left: 50%;
+}
+.head-light-dot.right {
+  left: 50%;
+}
+#blackout-mask.light-animate .head-light-dot.left {
+  left: 10%;
+}
+#blackout-mask.light-animate .head-light-dot.right {
+  left: 90%;
+}
+#blackout-mask.light-fadeout .head-light-dot {
+  opacity: 0;
+}
+
+#blackout-mask.light-animate .head-light {
+  transform: translate(-50%,-50%) scale(2.2);
+}
+#blackout-mask.light-fadeout .head-light {
+  opacity: 0;
+}
+
+    font-family: 'Noto Sans TC', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #191e2a;
+    color: #f6f8fa;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+}
+
+/* 增加全局空白區域，讓畫面更清爽 */
+main, section, .booking-section {
+    margin-bottom: 32px;
+}
+
+/* 強調重點文字 */
+strong, .highlight {
+    color: #ff9800;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+/* 微調按鈕陰影與漸層，提升層次感 */
+button, .booking-form button, input[type="submit"] {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.13), 0 1.5px 0 #fff2 inset;
+    background: linear-gradient(90deg, #00e1ff 0%, #ff00c8 100%);
+    border-radius: 32px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+}
+button[type="submit"]:hover, button[type="submit"]:focus {
+    background: linear-gradient(90deg, #ff00c8 0%, #00e1ff 100%);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* 增加輸入欄位的空白與圓角 */
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 1.08em;
+    margin-bottom: 8px;
+}
+
+/* 增加表單區塊的空白 */
+.booking-section {
+    padding: 42px 32px 32px 32px;
+}
+
+/* 行動裝置優化，讓表單元素更容易點擊 */
+@media (max-width: 450px) {
+    .booking-section {
+        padding: 12px 2vw 12px 2vw;
+        margin: 10px 0 10px 0;
+    }
+    .booking-form input,
+    .booking-form select,
+    .booking-form textarea {
+        font-size: 1.22em;
+        padding: 16px 10px;
+        border-radius: 12px;
+    }
+    button, .booking-form button, input[type="submit"] {
+        font-size: 1.28em;
+        padding: 20px 0;
+        border-radius: 40px;
+    }
 }
 
 .hero-banner {
@@ -87,6 +249,27 @@ body {
     .hero-content p {
         font-size: 1em;
     }
+    .booking-section {
+        padding: 18px 4vw 18px 4vw;
+        margin: 18px 0 18px 0;
+        border-radius: 10px;
+    }
+    .booking-form input,
+    .booking-form select,
+    .booking-form textarea {
+        font-size: 1.18em;
+        padding: 14px 12px;
+        border-radius: 10px;
+    }
+    button, .booking-form button, input[type="submit"] {
+        font-size: 1.22em;
+        padding: 18px 0;
+        border-radius: 36px;
+    }
+    .booking-form label {
+        font-size: 1.08em;
+        margin-bottom: 6px;
+    }
 }
 header {
     background: #000;
@@ -160,10 +343,12 @@ nav a:hover {
     max-width: 480px;
     margin: 48px auto 30px auto;
     background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-    padding: 32px 24px 22px 24px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    padding: 42px 32px 32px 32px;
     text-align: center;
+    /* 增加空白區域讓內容更清爽 */
+    margin-bottom: 48px;
 }
 .booking-section h2 {
     color: #002d4a;
@@ -179,8 +364,9 @@ nav a:hover {
 .booking-form label {
     text-align: left;
     color: #333;
-    font-size: 1em;
-    margin-bottom: 2px;
+    font-size: 1.1em;
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
 }
 .booking-form input,
 .booking-form select,
@@ -269,5 +455,8 @@ footer {
 
 .booking-section {
     padding-bottom: 38px;
+    background: #f5f5f7 !important; /* 柔和淡灰色 */
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
 }
 

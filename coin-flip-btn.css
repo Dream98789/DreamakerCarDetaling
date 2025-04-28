@@ -1,0 +1,121 @@
+/* 硬幣翻轉按鈕樣式 */
+.coin-btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 44px 0 38px 0;
+}
+.coin-flip-btn {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 30%, #111 55%, #000 100%);
+  box-shadow: 0 10px 32px #0008, 0 2px 0 #fff8 inset;
+  border: 6px solid #fff6;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35em;
+  font-family: 'Orbitron', 'Noto Sans TC', Arial, sans-serif;
+  font-weight: 900;
+  color: #bfa100;
+  letter-spacing: 0.13em;
+  text-shadow: 0 4px 16px #fff8, 0 1px 0 #fff8;
+  cursor: pointer;
+  perspective: 1200px;
+  overflow: hidden;
+  outline: none;
+  border-style: none;
+  transition: box-shadow 0.18s;
+}
+.coin-flip-btn::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 260px; height: 260px;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #222c 45%, #111e 85%, #0000 100%);
+  box-shadow: 0 0 80px 24px #222d, 0 0 140px 48px #000f;
+  opacity: 0.82;
+  pointer-events: none;
+  z-index: 10;
+  animation: coin-breath-light 2.2s ease-in-out infinite;
+}
+@keyframes coin-breath-light {
+  0% { opacity: 0.62; box-shadow: 0 0 80px 24px #222d, 0 0 140px 48px #000f; }
+  50% { opacity: 1; box-shadow: 0 0 140px 56px #333f, 0 0 220px 80px #000f; }
+  100% { opacity: 0.62; box-shadow: 0 0 80px 24px #222d, 0 0 140px 48px #000f; }
+}
+
+.coin-flip-btn:active {
+  box-shadow: 0 2px 16px #0005;
+}
+.coin-flip-btn .face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.coin-flip-btn .front {
+  z-index: 2;
+  color: #fff;
+  font-size: 2.2em;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  -webkit-text-stroke: 0.5px #fff;
+  text-stroke: 0.5px #fff;
+  text-shadow:
+    0 0 8px #d400ff,
+    0 0 16px #9a00ff,
+    0 0 32px #d400ffcc,
+    0 0 48px #9a00ffcc,
+    0 0 80px #fff,
+    0 1px 0 #fff8;
+}
+.coin-flip-btn .back {
+  transform: rotateX(180deg);
+  color: #fff;
+  background: radial-gradient(circle at 30% 70%, #bfa100 60%, #ffe066 100%);
+  font-size: 1.1em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  z-index: 1;
+}
+.coin-flip-btn.flipping {
+  animation: coin-flip-3d 1.8s cubic-bezier(.6,-0.4,.4,1.6);
+  animation-fill-mode: both;
+  transform-style: preserve-3d;
+}
+@keyframes coin-flip-3d {
+  0% {
+    transform: rotateX(0deg) scale(0.7);
+    box-shadow: 0 0px 0 #0000;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  35% {
+    transform: rotateX(180deg) scale(1.12);
+    box-shadow: 0 18px 64px #fff6, 0 2px 0 #fff8 inset;
+  }
+  60% {
+    transform: rotateX(320deg) scale(0.98);
+    box-shadow: 0 6px 32px #ffe06688, 0 2px 0 #fff8 inset;
+  }
+  80% {
+    transform: rotateX(350deg) scale(1.05);
+    box-shadow: 0 12px 48px #bfa10099, 0 2px 0 #fff8 inset;
+  }
+  100% {
+    transform: rotateX(360deg) scale(1.0);
+    box-shadow: 0 10px 32px #0008, 0 2px 0 #fff8 inset;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,52 @@
+<!-- 測試黑幕特效按鈕，點擊後直接觸發黑幕動畫（不依賴表單流程） -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>黑幕特效測試</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #blackout-mask {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      background: #000;
+      z-index: 99999;
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: opacity 1s;
+      transition: opacity 1s;
+    }
+    #blackout-mask.active {
+      opacity: 1;
+      pointer-events: all;
+      transition: none;
+    }
+    #blackout-mask.fadeout {
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: opacity 1s;
+      transition: opacity 1s;
+    }
+    .test-btn {
+      position:fixed;bottom:32px;right:32px;z-index:100000;background:#222;color:#fff;padding:12px 22px;border-radius:8px;font-size:1.1em;
+    }
+  </style>
+</head>
+<body>
+  <div id="blackout-mask"></div>
+  <button class="test-btn" onclick="testBlackout()">測試黑幕特效</button>
+  <script>
+    function testBlackout() {
+      var blackout = document.getElementById('blackout-mask');
+      if (blackout) {
+        blackout.className = 'active';
+        setTimeout(function(){ blackout.className = 'fadeout'; }, 1200);
+        setTimeout(function(){ blackout.className = ''; }, 2500);
+      } else {
+        alert('找不到 #blackout-mask 元素');
+      }
+    }
+  </script>
+</body>
+</html>
