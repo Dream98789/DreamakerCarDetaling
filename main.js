@@ -102,18 +102,33 @@ window.addEventListener('DOMContentLoaded', function() {
     coinBtn.addEventListener('animationend', function() {
       coinBtn.classList.remove('flipping');
     });
-    coinBtn.addEventListener('click', function() {
-      // 翻轉動畫重播
-      coinBtn.classList.remove('flipping');
-      void coinBtn.offsetWidth;
-      coinBtn.classList.add('flipping');
-      // 顯示表單
-      var bookingSection = document.getElementById('bookingSection');
-      if (bookingSection && bookingSection.style.display === 'none') {
-        bookingSection.style.display = '';
-        bookingSection.scrollIntoView({behavior:'smooth'});
-      }
-    });
+    // 專用顯示表單函數，避免重複顯示
+function showBookingSection() {
+  var bookingSection = document.getElementById('bookingSection');
+  if (bookingSection && (bookingSection.style.display === 'none' || getComputedStyle(bookingSection).display === 'none')) {
+    bookingSection.style.display = 'block';
+    bookingSection.scrollIntoView({behavior:'smooth'});
+    console.log('[VVIP] Booking section shown');
+  }
+}
+// 點擊事件
+coinBtn.addEventListener('click', function(e) {
+  coinBtn.classList.remove('flipping');
+  void coinBtn.offsetWidth;
+  coinBtn.classList.add('flipping');
+  showBookingSection();
+});
+// iOS/行動裝置兼容 touchend 事件（防止雙觸發）
+let touchHandled = false;
+coinBtn.addEventListener('touchend', function(e) {
+  if (touchHandled) return;
+  touchHandled = true;
+  coinBtn.classList.remove('flipping');
+  void coinBtn.offsetWidth;
+  coinBtn.classList.add('flipping');
+  showBookingSection();
+  setTimeout(function(){ touchHandled = false; }, 400);
+});
   }
 
   // Ripple for buttons, links
