@@ -95,6 +95,28 @@ function showDreamakerPopup() {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
+  // === 測試震動按鈕 ===
+  var testBtn = document.createElement('button');
+  testBtn.textContent = '測試手機震動';
+  testBtn.style.position = 'fixed';
+  testBtn.style.bottom = '22px';
+  testBtn.style.right = '22px';
+  testBtn.style.zIndex = 99999;
+  testBtn.style.background = '#222';
+  testBtn.style.color = '#fff';
+  testBtn.style.padding = '12px 22px';
+  testBtn.style.borderRadius = '8px';
+  testBtn.style.fontSize = '1.1em';
+  testBtn.onclick = function() {
+    if (navigator.vibrate) {
+      console.log('【測試按鈕】vibrate 即將執行');
+      const result = navigator.vibrate([200, 80, 200, 80, 200]);
+      console.log('【測試按鈕】vibrate 執行結果:', result);
+    } else {
+      console.log('【測試按鈕】此裝置不支援 vibrate');
+    }
+  };
+  document.body.appendChild(testBtn);
   // 新硬幣翻轉按鈕動畫
   var coinBtn = document.getElementById('coinFlipBtn');
   if (coinBtn) {
@@ -197,7 +219,11 @@ function showBookingSection(e) {
       // 僅在送出預約時播放音效
       // 立即觸發手機震動，確保一定有感覺
       if (navigator.vibrate) {
-        navigator.vibrate([100, 60, 120, 60, 100]);
+        console.log('vibrate 即將執行');
+        const result = navigator.vibrate([100, 60, 120, 60, 100]);
+        console.log('vibrate 執行結果:', result);
+      } else {
+        console.log('此裝置不支援 vibrate');
       }
       // 使用 Web Audio API 播放音效並同步震動（高擬真）
       playAudioWithVibration('lambo-start-up-sound-26364.mp3');
