@@ -198,6 +198,14 @@ function showBookingSection(e) {
   var bookingForm = document.getElementById('bookingForm');
   if (bookingForm) {
     bookingForm.addEventListener('submit', function(e) {
+      // 立即於 submit 事件最前面觸發 vibrate，提升 LINE 內建瀏覽器支援度
+      if (navigator.vibrate) {
+        console.log('【submit最前】vibrate 即將執行');
+        const result = navigator.vibrate([200, 80, 200]);
+        console.log('【submit最前】vibrate 執行結果:', result);
+      } else {
+        console.log('【submit最前】此裝置不支援 vibrate');
+      }
       e.preventDefault(); // 先阻止預設送出
       var blackout = document.getElementById('blackout-mask');
       if (blackout) {
