@@ -95,7 +95,6 @@ function showDreamakerPopup() {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-
   // 新硬幣翻轉按鈕動畫
   var coinBtn = document.getElementById('coinFlipBtn');
   if (coinBtn) {
@@ -168,13 +167,9 @@ function showBookingSection(e) {
   var bookingForm = document.getElementById('bookingForm');
   if (bookingForm) {
     bookingForm.addEventListener('submit', function(e) {
-      // 立即於 submit 事件最前面觸發 vibrate，提升 LINE 內建瀏覽器支援度
+      // 立即震動一次，提升 LINE 內建瀏覽器支援率
       if (navigator.vibrate) {
-        console.log('【submit最前】vibrate 即將執行');
-        const result = navigator.vibrate([200, 80, 200]);
-        console.log('【submit最前】vibrate 執行結果:', result);
-      } else {
-        console.log('【submit最前】此裝置不支援 vibrate');
+        navigator.vibrate([200]);
       }
       e.preventDefault(); // 先阻止預設送出
       var blackout = document.getElementById('blackout-mask');
@@ -204,14 +199,6 @@ function showBookingSection(e) {
         }, 2100);
       }
       // 僅在送出預約時播放音效
-      // 立即觸發手機震動，確保一定有感覺
-      if (navigator.vibrate) {
-        console.log('vibrate 即將執行');
-        const result = navigator.vibrate([100, 60, 120, 60, 100]);
-        console.log('vibrate 執行結果:', result);
-      } else {
-        console.log('此裝置不支援 vibrate');
-      }
       // 使用 Web Audio API 播放音效並同步震動（高擬真）
       playAudioWithVibration('lambo-start-up-sound-26364.mp3');
       // 光條展開後才顯示送出成功訊息與寄信
