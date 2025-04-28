@@ -102,32 +102,34 @@ window.addEventListener('DOMContentLoaded', function() {
     coinBtn.addEventListener('animationend', function() {
       coinBtn.classList.remove('flipping');
     });
-    // 專用顯示表單函數，避免重複顯示
-function showBookingSection() {
+    // 專用顯示表單函數，避免重複顯示，並強制 reflow
+function showBookingSection(e) {
+  if (e) {
+    if (typeof e.preventDefault === 'function') e.preventDefault();
+    if (typeof e.stopPropagation === 'function') e.stopPropagation();
+  }
   var bookingSection = document.getElementById('bookingSection');
-  if (bookingSection && (bookingSection.style.display === 'none' || getComputedStyle(bookingSection).display === 'none')) {
+  if (bookingSection) {
+    // 強制顯示
     bookingSection.style.display = 'block';
+    bookingSection.style.visibility = 'visible';
+    bookingSection.style.opacity = '1';
+    // 強制 reflow
+    void bookingSection.offsetHeight;
+    // 確保動畫 class 不影響顯示
+    bookingSection.classList.remove('hide');
     bookingSection.scrollIntoView({behavior:'smooth'});
     console.log('[VVIP] Booking section shown');
   }
 }
-// 點擊事件
-coinBtn.addEventListener('click', function(e) {
-  coinBtn.classList.remove('flipping');
-  void coinBtn.offsetWidth;
-  coinBtn.classList.add('flipping');
-  showBookingSection();
-});
-// iOS/行動裝置兼容 touchend 事件（防止雙觸發）
-let touchHandled = false;
-coinBtn.addEventListener('touchend', function(e) {
-  if (touchHandled) return;
-  touchHandled = true;
-  coinBtn.classList.remove('flipping');
-  void coinBtn.offsetWidth;
-  coinBtn.classList.add('flipping');
-  showBookingSection();
-  setTimeout(function(){ touchHandled = false; }, 400);
+// 綁定 click、touchend、pointerup
+['click','touchend','pointerup'].forEach(function(evt){
+  coinBtn.addEventListener(evt, function(e) {
+    coinBtn.classList.remove('flipping');
+    void coinBtn.offsetWidth;
+    coinBtn.classList.add('flipping');
+    showBookingSection(e);
+  }, {passive:false});
 });
   }
 
