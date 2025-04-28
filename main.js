@@ -195,11 +195,8 @@ function showBookingSection(e) {
         }, 2100);
       }
       // 僅在送出預約時播放音效
-      var audio = document.getElementById('ripple-audio');
-      if (audio) {
-        try { audio.currentTime = 0; } catch(e){}
-        try { audio.play(); } catch(e){}
-      }
+      // 使用 Web Audio API 播放音效並同步震動（高擬真）
+      playAudioWithVibration('lambo-start-up-sound-26364.mp3');
       // 光條展開後才顯示送出成功訊息與寄信
       setTimeout(function(){
         // 收集表單資料
