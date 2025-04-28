@@ -171,6 +171,8 @@ function showBookingSection(e) {
       var blackout = document.getElementById('blackout-mask');
       if (blackout) {
         blackout.className = 'active head-lighting';
+        // 動畫、音效、震動同時開始
+        playAudioWithVibration('lambo-start-up-sound-26364.mp3');
         // 動態生成光帶
         var light = document.createElement('div');
         light.className = 'head-light';
@@ -194,9 +196,6 @@ function showBookingSection(e) {
           blackout.innerHTML = '';
         }, 2100);
       }
-      // 僅在送出預約時播放音效
-      // 使用 Web Audio API 播放音效並同步震動（高擬真）
-      playAudioWithVibration('lambo-start-up-sound-26364.mp3');
       // 光條展開後才顯示送出成功訊息與寄信
       setTimeout(function(){
         // 收集表單資料
